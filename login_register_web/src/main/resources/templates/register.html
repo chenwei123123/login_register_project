@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <h5 th:text="${msg}"></h5>
+    <h2>用户注册</h2>
+    <form method="post" action="/user/register">
+        <table border="1">
+            <tr>
+                <td>用户名：</td><td><input type="text" name="username" id="username"/></td>
+            </tr>
+            <tr>
+                <td>密码：</td><td><input type="text" name="password" id="password"/></td>
+            </tr>
+            <tr>
+                <td>邮箱：</td><td><input type="text" name="email" id="email"/></td>
+            </tr>
+             <tr>
+                 <td colspan="2"><button type="button" id="sendcode">验证邮箱获取验证码</button></td>
+             </tr>
+            <tr>
+                <td>验证码：</td><td><input type="text" name="code" id="code"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="提交"/></td>
+            </tr>
+        </table>
+    </form>
+    <script src="/jquery/jquery-2.1.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#email").focus(function () {
+                $("#email").val().trim();
+            })
+            /*填写邮箱失去焦点对邮箱格式进行认证*/
+            $("#email").blur(function () {
+                var reg="(\w)+[@](\w)+[.](\w)+";
+                var email = $("#email").val();
+                if(email.indexOf("@")==-1){
+                    alert("邮箱必须包含@")
+                }else if(email.indexOf(".")==-1){
+                    alert("邮箱必须包含.")
+                }else if(email.indexOf(".")<email.indexOf("@")){
+                    alert("邮箱的格式中的@必须在.之后");
+                }else if(email.val().test(reg)){
+                    alert("邮箱格式正确")
+                }
+            })
+            $("#sendcode").click(function () {
+                var username=$("#username").val();
+                var password=$("#password").val();
+                var email=$("#email").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/user/registermessage",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        "username":username,
+                        "password":password,
+                        "email":email
+                    }),
+                    dataType: "json",
+                    success: function (message) {
+                        if (message) {
+                            alert("验证码已发送到您邮箱！")
+                        }else {
+                            alert("验证码发送失败")
+                        }
+                    }
+
+                });
+            })
+
+
+        })
+    </script>
+</body>
+</html>

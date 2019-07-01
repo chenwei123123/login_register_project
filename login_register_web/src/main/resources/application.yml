@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  thymeleaf:
+    cache: false
+dubbo:
+  application:
+    name: login_register_web
+  registry:
+    address: zookeeper://47.106.187.204:2181
+  consumer:
+    check: false

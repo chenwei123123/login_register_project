@@ -1,0 +1,25 @@
+server:
+  port: 9092
+dubbo:
+  application:
+    name: springboot_email
+  registry:
+    address: zookeeper://47.106.187.204:2181
+  consumer:
+    check: false
+    timeout: 10000
+    retries: 3
+  protocol:
+    port: -1
+spring:
+  mail:
+    protocol: smtp
+    host: smtp.sina.cn
+    username: 123456chenwei123@sina.cn
+    password: chenwei@123456
+  datasource:
+    url: jdbc:mysql:///traindb
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
