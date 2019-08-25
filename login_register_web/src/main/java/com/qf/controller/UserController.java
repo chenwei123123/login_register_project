@@ -113,7 +113,7 @@ public class UserController {
         map.put("password",password);
         List<User> users = userService.getUserByName(map);
         if(users!=null){
-            return  "success";
+            return  "success1";
         }
         return  "login";
     }
